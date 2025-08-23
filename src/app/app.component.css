@@ -1,0 +1,19 @@
+/* app.component.css */
+:host {
+  display: block;
+  height: 100%;
+}
+
+.content {
+  margin-top: 100px; /* Matches the body padding-top from navbar CSS */
+  min-height: calc(100vh - 100px); /* Ensures content takes at least full viewport height */
+  overflow-y: auto; /* Enables vertical scrolling */
+}
+
+/* Adjust for mobile */
+@media (max-width: 768px) {
+  .content {
+    margin-top: 60px; /* Matches mobile navbar height */
+    min-height: calc(100vh - 60px);
+  }
+}

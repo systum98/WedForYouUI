@@ -1,1 +1,115 @@
-<p>nav-bar works!</p>
+<header class="navbar-wrapper" [class.scrolled]="isScrolled">
+  <!-- Top Bar -->
+  <div class="navbar-top">
+    <div class="container">
+      <div class="top-left">
+        <span class="tagline">India's Favourite Wedding Planning Platform</span>
+      </div>
+      
+      <div class="top-center">
+        <div class="city-selector">
+          <select [value]="selectedCity" (change)="onCityChange($event)" class="city-dropdown">
+            <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+          </select>
+          <svg class="dropdown-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none">
+            <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      
+      <div class="top-right">
+        <button class="top-action-btn" (click)="onWriteReview()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+          <span>Write A Review</span>
+        </button>
+        <button class="top-action-btn" (click)="onDownloadApp()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+          <span>Download App</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Navigation -->
+  <nav class="navbar-main">
+    <div class="container">
+      <!-- Brand Logo -->
+      <div class="brand">
+        <a href="/" class="brand-link">
+          <div class="logo">
+           <img src="assets/Images/Bride_White.png" alt="WedForYou" class="logo-image">
+    </div>
+          <div class="brand-text">
+            <span class="wed">Wed</span><span class="me">For</span><span class="good">You</span>
+          </div>
+        </a>
+      </div>
+      
+      <!-- Navigation Menu -->
+      <div class="nav-menu" [class.mobile-open]="isMobileMenuOpen">
+        <ul class="nav-links">
+          <li class="nav-item">
+            <a href="/venues" class="nav-link" (click)="navigateToVenues()">
+              <span>Venues</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/vendors" class="nav-link" (click)="navigateToVendors()">
+              <span>Vendors</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/photos" class="nav-link" (click)="navigateToPhotos()">
+              <span>Photos</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/real-weddings" class="nav-link" (click)="navigateToRealWeddings()">
+              <span>Real Weddings</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/blog" class="nav-link" (click)="navigateToBlog()">
+              <span>Blog</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/e-invites" class="nav-link" (click)="navigateToEInvites()">
+              <span>E-Invites</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/genie" class="nav-link" (click)="navigateToGenie()">
+              <span>Genie</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Right Actions -->
+      <div class="nav-actions">
+        <button class="search-toggle" (click)="onSearch()" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </button>
+        <button class="login-btn" (click)="onLogin()">
+          Log In
+        </button>
+        <button class="mobile-menu-toggle" (click)="toggleMobileMenu()" aria-label="Toggle menu">
+          <span class="hamburger-line" [class.active]="isMobileMenuOpen"></span>
+          <span class="hamburger-line" [class.active]="isMobileMenuOpen"></span>
+          <span class="hamburger-line" [class.active]="isMobileMenuOpen"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>
