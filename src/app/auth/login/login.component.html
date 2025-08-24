@@ -1,85 +1,70 @@
-<div class="login-container">
-  <div class="login-card">
-    <!-- Header -->
-    <div class="login-header">
-      <h2 class="login-title">Sign In/Sign Up</h2>
-      <div class="step-indicator">
-        <div class="step" [class.active]="currentStep === 'phone'" [class.completed]="currentStep !== 'phone'">1</div>
-        <div class="step-line"></div>
-        <div class="step" [class.active]="currentStep === 'details'" [class.completed]="currentStep === 'otp'">2</div>
-        <div class="step-line"></div>
-        <div class="step" [class.active]="currentStep === 'otp'">3</div>
-      </div>
-    </div>
+<div class="main-container">
+  <div class="card">
+  <!-- Left Side - Image Section -->
+  <div class="left-section">
+    <!-- <div class="image-overlay"> -->
+       <img src="/assets/Images/Wed_Login.png" alt="Wedding" class="overlay-img">
+      <!-- <h1 class="main-title">India's Favourite Wedding Planning Platform</h1> -->
+    <!-- </div> -->
+  </div>
 
-    <!-- Phone Number Step -->
-    <div *ngIf="currentStep === 'phone'" class="login-step fade-in">
-      <div class="input-group">
-        <div class="input-icon">
-          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-          </svg>
-        </div>
+  <!-- Right Side - Login Form -->
+  <div class="right-section">
+    <button class="close-btn" (click)="onClose()">×</button>
+    
+    <div class="login-form">
+      <h2 class="form-title">Sign In/Sign Up</h2>
+      
+      <!-- Step 1: Phone/Email Input -->
+      <div *ngIf="currentStep === 'phone'" class="step-container">
         <form [formGroup]="phoneForm" (ngSubmit)="onPhoneSubmit()">
-          <input
-            type="tel"
-            placeholder="Enter mobile number*"
-            formControlName="phone"
-            class="form-input"
-            [class.error]="isFieldInvalid(phoneForm, 'phone')"
-            maxlength="10"
-          />
-          <div *ngIf="isFieldInvalid(phoneForm, 'phone')" class="error-message">
-            {{ getFieldError(phoneForm, 'phone') }}
+          <div class="input-group">
+            <div class="input-wrapper">
+              <input
+                type="text"
+                placeholder="Enter email or mobile*"
+                formControlName="phoneOrEmail"
+                class="form-input"
+                [class.error]="isFieldInvalid(phoneForm, 'phoneOrEmail')"
+              />
+              <button type="button" class="clear-btn" *ngIf="phoneForm.get('phoneOrEmail')?.value" (click)="clearInput()">
+                ×
+              </button>
+            </div>
+            <div *ngIf="isFieldInvalid(phoneForm, 'phoneOrEmail')" class="error-message">
+              {{ getFieldError(phoneForm, 'phoneOrEmail') }}
+            </div>
+            
+            <button
+              type="submit"
+              class="continue-btn"
+              [disabled]="phoneForm.invalid || isLoading"
+            >
+              <span *ngIf="!isLoading">Continue</span>
+              <div *ngIf="isLoading" class="loading-spinner"></div>
+            </button>
           </div>
-          
-          <button
-            type="submit"
-            class="continue-btn"
-            [disabled]="phoneForm.invalid || isLoading"
-          >
-            <span *ngIf="!isLoading">Continue</span>
-            <span *ngIf="isLoading" class="loading-spinner"></span>
-          </button>
         </form>
+        
+        <div class="separator">
+          <span>OR</span>
+        </div>
+        
+        <div class="social-login">
+          <button class="social-btn facebook-btn">
+            Continue With Facebook
+          </button>
+          <button class="social-btn google-btn">
+            Continue With Google
+          </button>
+        </div>
       </div>
 
-      <div class="divider">
-        <span>OR</span>
-      </div>
-
-      <div class="social-login">
-        <button class="social-btn facebook-btn">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-          </svg>
-          Continue with Facebook
-        </button>
-        <button class="social-btn google-btn">
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-          </svg>
-          Continue with Google
-        </button>
-      </div>
-    </div>
-
-    <!-- Details Step -->
-    <div *ngIf="currentStep === 'details'" class="login-step fade-in">
-      <button class="back-btn" (click)="onBackStep()">
-        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
-        Back
-      </button>
-
-      <form [formGroup]="detailsForm" (ngSubmit)="onDetailsSubmit()">
-        <div class="input-group">
-          <div class="input-row">
-            <div class="input-half">
+      <!-- Step 2: User Details -->
+      <div *ngIf="currentStep === 'details'" class="step-container">
+        <form [formGroup]="detailsForm" (ngSubmit)="onDetailsSubmit()">
+          <div class="input-group">
+            <div class="input-wrapper">
               <input
                 type="text"
                 placeholder="First Name*"
@@ -87,11 +72,12 @@
                 class="form-input"
                 [class.error]="isFieldInvalid(detailsForm, 'firstName')"
               />
-              <div *ngIf="isFieldInvalid(detailsForm, 'firstName')" class="error-message">
-                {{ getFieldError(detailsForm, 'firstName') }}
-              </div>
             </div>
-            <div class="input-half">
+            <div *ngIf="isFieldInvalid(detailsForm, 'firstName')" class="error-message">
+              {{ getFieldError(detailsForm, 'firstName') }}
+            </div>
+
+            <div class="input-wrapper">
               <input
                 type="text"
                 placeholder="Last Name*"
@@ -99,88 +85,77 @@
                 class="form-input"
                 [class.error]="isFieldInvalid(detailsForm, 'lastName')"
               />
-              <div *ngIf="isFieldInvalid(detailsForm, 'lastName')" class="error-message">
-                {{ getFieldError(detailsForm, 'lastName') }}
-              </div>
             </div>
-          </div>
+            <div *ngIf="isFieldInvalid(detailsForm, 'lastName')" class="error-message">
+              {{ getFieldError(detailsForm, 'lastName') }}
+            </div>
 
-          <div class="input-icon">
-            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-            </svg>
-          </div>
-          <input
-            type="email"
-            placeholder="Email Address*"
-            formControlName="email"
-            class="form-input"
-            [class.error]="isFieldInvalid(detailsForm, 'email')"
-          />
-          <div *ngIf="isFieldInvalid(detailsForm, 'email')" class="error-message">
-            {{ getFieldError(detailsForm, 'email') }}
-          </div>
-
-          <div class="phone-display">
-            <span>Phone: +91 {{ phoneNumber }}</span>
-          </div>
-
-          <button
-            type="submit"
-            class="continue-btn"
-            [disabled]="detailsForm.invalid || isLoading"
-          >
-            <span *ngIf="!isLoading">Send OTP</span>
-            <span *ngIf="isLoading" class="loading-spinner"></span>
-          </button>
-        </div>
-      </form>
-    </div>
-
-    <!-- OTP Step -->
-    <div *ngIf="currentStep === 'otp'" class="login-step fade-in">
-      <button class="back-btn" (click)="onBackStep()">
-        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
-        Back
-      </button>
-
-      <div class="otp-info">
-        <h3>Verify Your Phone Number</h3>
-        <p>We've sent a 6-digit OTP to +91 {{ phoneNumber }}</p>
-      </div>
-
-      <form [formGroup]="otpForm" (ngSubmit)="onOtpSubmit()">
-        <div class="input-group">
-          <input
-            type="text"
-            placeholder="Enter 6-digit OTP*"
-            formControlName="otp"
-            class="form-input otp-input"
-            [class.error]="isFieldInvalid(otpForm, 'otp')"
-            maxlength="6"
-          />
-          <div *ngIf="isFieldInvalid(otpForm, 'otp')" class="error-message">
-            {{ getFieldError(otpForm, 'otp') }}
-          </div>
-
-          <div class="otp-actions">
-            <button type="button" class="resend-btn" (click)="resendOtp()">
-              Resend OTP
+            <div class="input-wrapper">
+              <input
+                type="email"
+                placeholder="Email Address*"
+                formControlName="email"
+                class="form-input"
+                [class.error]="isFieldInvalid(detailsForm, 'email')"
+              />
+            </div>
+            <div *ngIf="isFieldInvalid(detailsForm, 'email')" class="error-message">
+              {{ getFieldError(detailsForm, 'email') }}
+            </div>
+            
+            <button
+              type="submit"
+              class="continue-btn"
+              [disabled]="detailsForm.invalid || isLoading"
+            >
+              <span *ngIf="!isLoading">Submit</span>
+              <div *ngIf="isLoading" class="loading-spinner"></div>
             </button>
           </div>
+        </form>
+      </div>
 
-          <button
-            type="submit"
-            class="continue-btn"
-            [disabled]="otpForm.invalid || isLoading"
-          >
-            <span *ngIf="!isLoading">Verify & Login</span>
-            <span *ngIf="isLoading" class="loading-spinner"></span>
-          </button>
+      <!-- Step 3: OTP Verification -->
+      <div *ngIf="currentStep === 'otp'" class="step-container">
+        <div class="otp-info">
+          <p>We've sent a verification code to</p>
+          <p class="phone-number">+91 {{ userPhone }}</p>
         </div>
-      </form>
+
+        <form [formGroup]="otpForm" (ngSubmit)="onOtpSubmit()">
+          <div class="input-group">
+            <div class="input-wrapper">
+              <input
+                type="text"
+                placeholder="Enter OTP"
+                formControlName="otp"
+                class="form-input otp-input"
+                [class.error]="isFieldInvalid(otpForm, 'otp')"
+                maxlength="6"
+              />
+            </div>
+            <div *ngIf="isFieldInvalid(otpForm, 'otp')" class="error-message">
+              {{ getFieldError(otpForm, 'otp') }}
+            </div>
+
+            <div class="resend-section">
+              <button type="button" class="resend-btn" (click)="resendOtp()">
+                Resend OTP
+              </button>
+            </div>
+            
+            <button
+              type="submit"
+              class="continue-btn"
+              [disabled]="otpForm.invalid || isLoading"
+            >
+              <span *ngIf="!isLoading">Verify</span>
+              <div *ngIf="isLoading" class="loading-spinner"></div>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
   </div>
 </div>
