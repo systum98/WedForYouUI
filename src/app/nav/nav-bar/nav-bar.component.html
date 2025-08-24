@@ -101,8 +101,8 @@
             <path d="M21 21l-4.35-4.35"/>
           </svg>
         </button>
-        <button class="login-btn" (click)="onLogin()">
-          Log In
+        <button class="login-btn" [routerLink]="'/auth/login'">
+         Log In
         </button>
         <button class="mobile-menu-toggle" (click)="toggleMobileMenu()" aria-label="Toggle menu">
           <span class="hamburger-line" [class.active]="isMobileMenuOpen"></span>

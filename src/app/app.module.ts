@@ -4,6 +4,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavModule } from './nav/nav.module';  
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   declarations: [
@@ -15,6 +17,7 @@ import { NavModule } from './nav/nav.module';
     AppRoutingModule,
     NavModule  ,
     ReactiveFormsModule
+   
   ],
   providers: [
     provideClientHydration(withEventReplay())
